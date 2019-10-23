@@ -1,0 +1,30 @@
+{
+  "name": "publish-svelte",
+  "version": "0.0.1",
+  "description": "A command-line tool for cpublishing svelte components",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "bin": {
+    "pubs": "src/index.js"
+  },
+  "keywords": [
+    "svelte",
+    "cli",
+    "publish",
+    "npm",
+    "components"
+  ],
+  "author": "Philip Christiansen",
+  "license": "ISC",
+  "dependencies": {
+    "rollup": "^1.25.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-svelte": "^5.1.0",
+    "svelte": "^3.12.1"
+  },
+  "devDependencies": {
+    "mocha": "^6.2.2"
+  }
+}
