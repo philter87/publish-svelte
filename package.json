@@ -2,12 +2,13 @@
   "name": "publish-svelte",
   "version": "0.0.1",
   "description": "A command-line tool for cpublishing svelte components",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha -r ts-node/register test/**.ts",
+    "tsc": "tsc"
   },
   "bin": {
-    "pubs": "src/index.js"
+    "pubs": "dist/index.js"
   },
   "keywords": [
     "svelte",
@@ -25,6 +26,11 @@
     "svelte": "^3.12.1"
   },
   "devDependencies": {
-    "mocha": "^6.2.2"
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.12.7",
+    "mocha": "^6.2.2",
+    "ts-node": "^8.4.1",
+    "tslint": "^6.0.0-beta0",
+    "typescript": "^3.6.4"
   }
 }
