@@ -2,6 +2,7 @@ import {join, parse} from "path";
 
 export interface PubsOptions {
   srcFile: string;
+  cleanUp?: boolean;
   outputDirectory?: string;
   packageName?: string;
   packageVersion?: string;
@@ -15,6 +16,7 @@ export function initOptions(opts: PubsOptions): PubsOptions {
   let parsed = parse(opts.srcFile);
   return {
     srcFile: opts.srcFile,
+    cleanUp: opts.cleanUp || true,
     outputDirectory: opts.outputDirectory || join(parsed.dir, parsed.name),
     componentName: opts.componentName || parsed.name,
     packageName: opts.packageName || toKebabCase(parsed.name),

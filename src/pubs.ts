@@ -1,4 +1,4 @@
-import {parse, join} from 'path';
+import {join, parse} from 'path';
 import {copyFileSync} from 'fs';
 import {OutputOptions, rollup} from "rollup";
 import svelte from 'rollup-plugin-svelte';
@@ -8,6 +8,7 @@ import {createHtmlExamples} from './creators/html-creator'
 import {initOptions, PubsOptions} from "./pubs-options";
 import {createPackageFile} from "./creators/package-json-creator";
 import {createReadmeFiles} from "./creators/readme-creator";
+import {cleanUp} from "./clean-up";
 
 export function pubs(pubsOptions: PubsOptions) {
   pubsOptions = initOptions(pubsOptions);
@@ -32,5 +33,6 @@ export function pubs(pubsOptions: PubsOptions) {
     .then(() => copyFileSync(pathComponent, join(outputPath, file.base)))
     .then(() => createPackageFile(componentName, outputPath))
     .then(() => createReadmeFiles(pubsOptions))
+    .then(() => cleanUp(pubsOptions))
     .catch(d => console.log("Error", d));
 }

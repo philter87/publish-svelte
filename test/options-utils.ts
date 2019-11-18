@@ -29,4 +29,8 @@ describe('options-utils', () => {
     let result = initOptions({srcFile: SRC_FILE, packageName: expectedPackageName});
     assert( expectedPackageName === result.packageName);
   });
+  it('Clean up by default', () => {
+    let result = initOptions({srcFile: SRC_FILE});
+    assert(result.cleanUp);
+  });
 });
