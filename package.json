@@ -1,7 +1,7 @@
 {
   "name": "publish-svelte",
-  "version": "0.0.1",
-  "description": "A command-line tool for cpublishing svelte components",
+  "version": "0.0.2",
+  "description": "A command-line tool for publishing svelte components to npm",
   "main": "dist/index.js",
   "scripts": {
     "test": "mocha -r ts-node/register test/**.ts",
@@ -10,6 +10,9 @@
   "bin": {
     "pubs": "dist/index.js"
   },
+  "files": [
+    "dist/**/*"
+  ],
   "keywords": [
     "svelte",
     "cli",

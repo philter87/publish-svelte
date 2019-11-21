@@ -1,16 +1,22 @@
 import {readTemplate} from "./templates/template-reader";
 import {PubsOptions} from "../pubs-options";
 import {join, parse} from "path";
-import {writeFileSync, mkdirSync, existsSync, readFileSync} from "fs";
+import {writeFileSync, mkdirSync, existsSync, readFileSync, unlinkSync} from "fs";
 
+export const README_FILENAME = 'readme.md';
+
+export function deleteReadmeVersionFile(opts: PubsOptions){
+  unlinkSync(join(parse(opts.srcFile).dir, getReadmeFileName(opts)))
+}
 
 export function createReadmeFiles(opts: PubsOptions){
   const readMeString = createReadmeString(opts.componentName, opts.packageName);
   const srcDir = parse(opts.srcFile).dir;
   if (!existsSync(opts.outputDirectory)){
+    console.log(opts.outputDirectory);
     mkdirSync(opts.outputDirectory);
   }
-  writeFileSync(join(opts.outputDirectory, "readme.md"), readMeString);
+  writeFileSync(join(opts.outputDirectory, README_FILENAME), readMeString);
   writeFileSync(join(srcDir, getReadmeFileName(opts)), readMeString);
 }
 
