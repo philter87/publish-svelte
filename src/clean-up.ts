@@ -13,12 +13,13 @@ function cleanUpFile(dir, file) {
 }
 
 export function cleanUp(opts: PubsOptions) {
+  if(opts.keep) { return true }
   let files = ['index.js', 'index.mjs', HTML_FILE_PREFIX + 'es.html', HTML_FILE_PREFIX + 'umd.html',
-    opts.componentName + ".svelte", "package.json", "readme.md"];
+    opts.componentName + ".svelte", "package.json", "README.md"];
   let exists = true;
   for (let file of files) {
-    exists = exists && cleanUpFile(opts.outputDirectory, file)
+    exists = exists && cleanUpFile(opts.outputDir, file)
   }
-  rmdirSync(opts.outputDirectory);
+  rmdirSync(opts.outputDir);
   return exists;
 }

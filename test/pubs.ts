@@ -9,7 +9,7 @@ const PARENT_COMPONENT = "ParentComponent";
 const SVELTE_COMPONENT_DIR = join(__dirname, "components");
 
 function verifyCleanUp(opts: PubsOptions) {
-  assert(!existsSync(opts.outputDirectory))
+  assert(!existsSync(opts.outputDir))
 }
 
 describe('pubs', () => {

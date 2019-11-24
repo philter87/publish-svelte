@@ -20,15 +20,21 @@
     "npm",
     "components"
   ],
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/philter87/publish-svelte"
+  },
   "author": "Philip Christiansen",
   "license": "ISC",
   "dependencies": {
+    "commander": "^4.0.1",
     "rollup": "^1.25.1",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-svelte": "^5.1.0",
     "svelte": "^3.12.1"
   },
   "devDependencies": {
+    "@types/commander": "^2.12.2",
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.12.7",
     "mocha": "^6.2.2",

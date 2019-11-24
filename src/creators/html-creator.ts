@@ -1,6 +1,8 @@
-import fs from "fs";
-import path, {join} from "path";
+
+
 import {readTemplate} from "./templates/template-reader";
+import {dirname, join} from "path";
+import {writeFileSync} from "fs";
 
 export const HTML_FILE_PREFIX = 'index-example-';
 
@@ -10,10 +12,10 @@ export function createHtmlExamples(componentName, outputOptions) {
 
 function write(componentName, outputOption) {
   const format = outputOption.format;
-  const outputPath = path.dirname(outputOption.file);
-  const filePath = path.join(outputPath, `${HTML_FILE_PREFIX}${format}.html`);
+  const outputPath = dirname(outputOption.file);
+  const filePath = join(outputPath, `${HTML_FILE_PREFIX}${format}.html`);
   let html = generateHtmlAsString(componentName, format);
-  fs.writeFileSync(filePath, html);
+  writeFileSync(filePath, html);
   return html;
 }
 

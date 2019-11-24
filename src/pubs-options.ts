@@ -2,8 +2,9 @@ import {join, parse} from "path";
 
 export interface PubsOptions {
   srcFile: string;
-  cleanUp?: boolean;
-  outputDirectory?: string;
+  keep?: boolean;
+  dryRun?: boolean;
+  outputDir?: string;
   packageName?: string;
   packageVersion?: string;
   componentName?: string;
@@ -16,8 +17,9 @@ export function initOptions(opts: PubsOptions): PubsOptions {
   let parsed = parse(opts.srcFile);
   return {
     srcFile: opts.srcFile,
-    cleanUp: opts.cleanUp || true,
-    outputDirectory: opts.outputDirectory || join(parsed.dir, parsed.name),
+    keep: opts.keep || false,
+    dryRun: opts.dryRun || false,
+    outputDir: opts.outputDir || join(parsed.dir, parsed.name),
     componentName: opts.componentName || parsed.name,
     packageName: opts.packageName || toKebabCase(parsed.name),
     packageVersion: opts.packageVersion || "0.0.1"

@@ -1,10 +1,9 @@
 import {
   createReadmeFiles,
   deleteReadmeVersionFile,
-  getReadmeFileName,
   parseOptionsFromReadmeFile, README_FILENAME
 } from "../src/creators/readme-creator";
-import {join, parse} from 'path';
+import {join} from 'path';
 import {unlinkSync, rmdirSync} from 'fs';
 import assert from 'assert';
 import {PubsOptions} from "../src/pubs-options";
@@ -18,14 +17,14 @@ const packageName = 'test-svelte-package';
 const packageVersion = '0.0.1';
 
 function cleanUpMdFiles(opts: PubsOptions){
-  unlinkSync(join(opts.outputDirectory, README_FILENAME));
-  rmdirSync(opts.outputDirectory);
+  unlinkSync(join(opts.outputDir, README_FILENAME));
+  rmdirSync(opts.outputDir);
   deleteReadmeVersionFile(opts)
 }
 
 describe('readme creator', () => {
   it('is file created', () => {
-    let opts: PubsOptions = {srcFile, packageName, packageVersion, componentName, outputDirectory};
+    let opts: PubsOptions = {srcFile, packageName, packageVersion, componentName, outputDir: outputDirectory};
     createReadmeFiles(opts);
     cleanUpMdFiles(opts);
   })

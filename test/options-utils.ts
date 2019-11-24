@@ -31,6 +31,6 @@ describe('options-utils', () => {
   });
   it('Clean up by default', () => {
     let result = initOptions({srcFile: SRC_FILE});
-    assert(result.cleanUp);
+    assert(!result.keep);
   });
 });
