@@ -14,12 +14,12 @@ function verifyCleanUp(opts: PubsOptions) {
 
 describe('pubs', () => {
   it('Simple, files should exist', () => {
-    var opts = {srcFile: join(SVELTE_COMPONENT_DIR, TEST_COMPONENT + ".svelte")};
+    var opts = {srcFile: join(SVELTE_COMPONENT_DIR, TEST_COMPONENT + ".svelte"), dryRun: true};
     return pubs(opts)
       .then( () => verifyCleanUp(opts))
   });
   it('Nested Component, files should exist', () => {
-    let opts = {srcFile: join(SVELTE_COMPONENT_DIR, PARENT_COMPONENT + ".svelte")};
+    let opts = {srcFile: join(SVELTE_COMPONENT_DIR, PARENT_COMPONENT + ".svelte"), dryRun: true};
     return pubs(opts)
       .then( () => verifyCleanUp(opts))
   });

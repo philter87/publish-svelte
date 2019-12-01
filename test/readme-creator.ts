@@ -1,7 +1,7 @@
 import {
   createReadmeFiles,
-  deleteReadmeVersionFile,
-  parseOptionsFromReadmeFile, README_FILENAME
+  deleteReadmeVersionFile, extractPubsOptionsFromReadmeFile,
+  README_FILENAME
 } from "../src/creators/readme-creator";
 import {join} from 'path';
 import {unlinkSync, rmdirSync} from 'fs';
@@ -30,14 +30,13 @@ describe('readme creator', () => {
   })
 });
 
-
-const NAME = 'ReadmeTestComponentName';
-const VERSION = '0.0.1';
-const PACKAGE_NAME = 'readme-test-package';
+const NAME = 'SimpleSvelteComponent';
+export const PACKAGE_VERSION = '0.1.5';
+const PACKAGE_NAME = 'simple-svelte-component';
 describe('readme file parser', () => {
-  it('Component Name from file name', () => {
-    let opts = parseOptionsFromReadmeFile(join('.','test',  NAME + '-v' + VERSION + '.md'));
-    assert(opts.packageVersion === VERSION);
+  it('PubsOptions from readme file', () => {
+    let opts = extractPubsOptionsFromReadmeFile(join('.','test',  NAME + '.md'));
+    assert(opts.packageVersion === PACKAGE_VERSION);
     assert(opts.componentName === NAME);
     assert(opts.packageName === PACKAGE_NAME );
   })

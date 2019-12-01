@@ -1,5 +1,5 @@
 <script>
-  let name = 'Philip';
+  export let name = 'Philip';
 </script>
 
 <p>Hello {name}</p>

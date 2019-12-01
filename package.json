@@ -1,6 +1,6 @@
 {
   "name": "publish-svelte",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "description": "A command-line tool for publishing svelte components to npm",
   "main": "dist/index.js",
   "scripts": {
@@ -17,12 +17,13 @@
     "svelte",
     "cli",
     "publish",
+    "share",
     "npm",
     "components"
   ],
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/philter87/publish-svelte"
+    "type": "git",
+    "url": "https://github.com/philter87/publish-svelte"
   },
   "author": "Philip Christiansen",
   "license": "ISC",

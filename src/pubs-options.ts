@@ -1,4 +1,10 @@
 import {join, parse} from "path";
+import {
+  extractPubsOptionsFromReadmeFile,
+  getReadmeFileName,
+  getReadmeFileNameFromOpts,
+  parseOptionsFromReadmeFile
+} from "./creators/readme-creator";
 
 export interface PubsOptions {
   srcFile: string;
@@ -10,19 +16,27 @@ export interface PubsOptions {
   componentName?: string;
 }
 
-export function initOptions(opts: PubsOptions): PubsOptions {
-  if (!opts.srcFile) {
+export const DEFAULT_INIT_VERSION = '0.0.1';
+
+export function mergeOptions(cliArguments: Partial<PubsOptions>): PubsOptions {
+  if (!cliArguments.srcFile) {
     throw Error('srcFile is a required field')
   }
-  let parsed = parse(opts.srcFile);
+  const defaultOpts = parseDefaultOptionsFromFileName(cliArguments.srcFile);
+  const mdOpts = extractPubsOptionsFromReadmeFile(getReadmeFileName(cliArguments.srcFile));
+  return {...defaultOpts, ...mdOpts, ...cliArguments};
+}
+
+export function parseDefaultOptionsFromFileName(srcFile: string): PubsOptions {
+  let parsed = parse(srcFile);
   return {
-    srcFile: opts.srcFile,
-    keep: opts.keep || false,
-    dryRun: opts.dryRun || false,
-    outputDir: opts.outputDir || join(parsed.dir, parsed.name),
-    componentName: opts.componentName || parsed.name,
-    packageName: opts.packageName || toKebabCase(parsed.name),
-    packageVersion: opts.packageVersion || "0.0.1"
+    srcFile: srcFile,
+    keep: false,
+    dryRun: false,
+    outputDir: join(parsed.dir, parsed.name),
+    componentName: parsed.name,
+    packageName: 'pubs-' + toKebabCase(parsed.name),
+    packageVersion: DEFAULT_INIT_VERSION
   }
 }
 

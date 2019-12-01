@@ -11,8 +11,13 @@ commander
   .option('-n, --component-name <type>', 'Component name. Default name of svelte file')
   .option('-o, --output-dir <type>', 'The output directory of the compiled component');
 
-export function parseArguments(processArgv: string[]): PubsOptions {
+function removeUndefined(opts) {
+  Object.keys(opts).forEach(key => opts[key] === undefined ? delete opts[key] : '');
+  return opts;
+}
+
+export function parseArguments(processArgv: string[]): Partial<PubsOptions> {
   const parsed = commander.parse(processArgv);
-  let pubs:PubsOptions = {srcFile: parsed.args[0]};
-  return Object.assign(pubs, parsed.opts());
+  let opts = removeUndefined(parsed.opts());
+  return Object.assign({srcFile: parsed.args[0]}, opts);
 }

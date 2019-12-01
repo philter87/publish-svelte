@@ -1,4 +1,7 @@
 # {PACKAGE_NAME}
+[comment]: <> (packageVersion:{PACKAGE_VERSION})
+[comment]: <> (packageName:{PACKAGE_NAME})
+[comment]: <> (componentName:{COMPONENT_NAME})
 
 {COMPONENT_NAME} is a vanilla javascript component which will work in any frontend framework. You can install from npm like this:
 
@@ -25,8 +28,8 @@ Below you can see how to use the component with vanilla js.
 ```html
 <body>
     <script type="module">
-        import SimpleSvelteComponent from './index.mjs'
-        new SimpleSvelteComponent({target:document.body})
+        import {COMPONENT_NAME} from './node_module/{PACKAGE_NAME}/index.mjs'
+        new {COMPONENT_NAME}({target:document.body})
     </script>
 </body>
 ```

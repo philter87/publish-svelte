@@ -5,34 +5,31 @@ import svelte from 'rollup-plugin-svelte';
 import resolve from 'rollup-plugin-node-resolve';
 import {INDEX_ES, INDEX_UMD} from "./constants";
 import {createHtmlExamples} from './creators/html-creator'
-import {initOptions, PubsOptions} from "./pubs-options";
+import {mergeOptions, PubsOptions} from "./pubs-options";
 import {createPackageFile} from "./creators/package-json-creator";
-import {createReadmeFiles} from "./creators/readme-creator";
+import {createReadmeFiles, extractPubsOptionsFromReadmeFile, getReadmeFileNameFromOpts} from "./creators/readme-creator";
 import {cleanUp} from "./clean-up";
+import {publish} from "./npm-publish";
 
-export function pubs(pubsOptions: PubsOptions) {
-  pubsOptions = initOptions(pubsOptions);
-  const pathComponent = pubsOptions.srcFile;
-  const file = parse(pathComponent);
-  const componentName = file.name;
-  const outputPath = join(file.dir, componentName);
-
+export function pubs(cmdOptions: Partial<PubsOptions>) {
+  const opts = mergeOptions(cmdOptions);
   const inputOptionsRollup = {
-    input: pathComponent,
+    input: opts.srcFile,
     plugins: [svelte(), resolve()]
   };
 
   const outputOptionsRollup: OutputOptions[] = [
-    {format: 'umd', name: componentName, file: join(outputPath, INDEX_UMD)},
-    {format: 'es', file: join(outputPath, INDEX_ES)}
+    {format: 'umd', name: opts.componentName, file: join(opts.outputDir, INDEX_UMD)},
+    {format: 'es', file: join(opts.outputDir, INDEX_ES)}
   ];
 
   return rollup(inputOptionsRollup)
     .then(bundle => Promise.all(outputOptionsRollup.map(output => bundle.write(output))))
-    .then(() => createHtmlExamples(componentName, outputOptionsRollup))
-    .then(() => copyFileSync(pathComponent, join(outputPath, file.base)))
-    .then(() => createPackageFile(componentName, outputPath))
-    .then(() => createReadmeFiles(pubsOptions))
-    .then(() => cleanUp(pubsOptions))
+    .then(() => createHtmlExamples(opts, outputOptionsRollup))
+    .then(() => copyFileSync(opts.srcFile, join(opts.outputDir, opts.componentName + '.svelte')))
+    .then(() => createPackageFile(opts))
+    .then(() => createReadmeFiles(opts))
+    .then(() => publish(opts))
+    .then(() => cleanUp(opts))
     .catch(d => console.log("Error", d));
 }
