@@ -12,6 +12,10 @@ import {cleanUp} from "./clean-up";
 import {publish} from "./npm-publish";
 
 export function pubs(cmdOptions: Partial<PubsOptions>) {
+  if (!cmdOptions.srcFile) {
+    console.log("A svelte source file is required. Example: pubs MySvelteComponent.svelte");
+    return;
+  }
   const opts = mergeOptions(cmdOptions);
   const inputOptionsRollup = {
     input: opts.srcFile,

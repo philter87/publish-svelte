@@ -17,9 +17,6 @@ export interface PubsOptions {
 export const DEFAULT_INIT_VERSION = '0.0.1';
 
 export function mergeOptions(cliArguments: Partial<PubsOptions>): PubsOptions {
-  if (!cliArguments.srcFile) {
-    throw Error('srcFile is a required field')
-  }
   const defaultOpts = parseDefaultOptionsFromFileName(cliArguments.srcFile);
   const mdOpts = extractPubsOptionsFromReadmeFile(getReadmeFileName(cliArguments.srcFile));
   return {...defaultOpts, ...mdOpts, ...cliArguments};

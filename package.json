@@ -1,6 +1,6 @@
 {
   "name": "publish-svelte",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "A command-line tool for publishing svelte components to npm",
   "main": "dist/index.js",
   "scripts": {
