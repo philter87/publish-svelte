@@ -10,7 +10,7 @@ export function deleteReadmeVersionFile(opts: PubsOptions){
 }
 
 export function createReadmeFiles(opts: PubsOptions){
-  const readMeFile = getReadmeFileName(opts.srcFile);
+  const readMeFile = getReadmePath(opts.srcFile);
   const mdExists = existsSync(join(readMeFile));
   const readMeString = mdExists ?
     readFile(readMeFile) :
@@ -29,6 +29,11 @@ export function getReadmeFileNameFromOpts(opts: PubsOptions){
 
 export function getReadmeFileName(srcFile: string){
   return join(parse(srcFile).name + ".md");
+}
+
+export function getReadmePath(srcFile: string){
+  console.log(join(parse(srcFile).dir , getReadmeFileName(srcFile)));
+  return join(parse(srcFile).dir , getReadmeFileName(srcFile));
 }
 
 export function createReadmeString(componentName: string, packageName: string, packageVersion: string){

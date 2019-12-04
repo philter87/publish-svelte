@@ -3,6 +3,8 @@
 [comment]: <> (packageName:simple-svelte-component)
 [comment]: <> (componentName:SimpleSvelteComponent)
 
+RANDOM STRING TO VERIFY
+
 SimpleSvelteComponent is a vanilla javascript component which will work in any frontend framework. You can install from npm like this:
 
 ```text

@@ -4,7 +4,7 @@ import {
   README_FILENAME
 } from "../src/creators/readme-creator";
 import {join} from 'path';
-import {unlinkSync, rmdirSync} from 'fs';
+import {unlinkSync, rmdirSync, readFileSync} from 'fs';
 import assert from 'assert';
 import {PubsOptions} from "../src/pubs-options";
 
@@ -47,6 +47,8 @@ describe('readme file parser', () => {
       packageVersion: PACKAGE_VERSION,
       outputDir: join(__dirname, componentName1)};
     createReadmeFiles(opts);
+    const content = readFileSync(join(opts.outputDir, README_FILENAME), {encoding: 'utf8'});
+    assert(content.includes("RANDOM STRING TO VERIFY"));
     cleanUpMdFiles(opts);
   })
 });
