@@ -1,15 +1,13 @@
 import {join, parse} from "path";
 import {
   extractPubsOptionsFromReadmeFile,
-  getReadmeFileName,
-  getReadmeFileNameFromOpts,
-  parseOptionsFromReadmeFile
+  getReadmeFileName
 } from "./creators/readme-creator";
 
 export interface PubsOptions {
   srcFile: string;
-  keep?: boolean;
-  dryRun?: boolean;
+  keepBundle?: boolean;
+  skipPublish?: boolean;
   outputDir?: string;
   packageName?: string;
   packageVersion?: string;
@@ -31,8 +29,8 @@ export function parseDefaultOptionsFromFileName(srcFile: string): PubsOptions {
   let parsed = parse(srcFile);
   return {
     srcFile: srcFile,
-    keep: false,
-    dryRun: false,
+    keepBundle: false,
+    skipPublish: false,
     outputDir: join(parsed.dir, parsed.name),
     componentName: parsed.name,
     packageName: 'pubs-' + toKebabCase(parsed.name),

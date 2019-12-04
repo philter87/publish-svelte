@@ -1,7 +1,7 @@
-import {readTemplate} from "./templates/template-reader";
 import {PubsOptions} from "../pubs-options";
 import {join, parse} from "path";
 import {writeFileSync, mkdirSync, existsSync, readFileSync, unlinkSync} from "fs";
+import {README_MD} from "./templates";
 
 export const README_FILENAME = 'README.md';
 
@@ -10,7 +10,11 @@ export function deleteReadmeVersionFile(opts: PubsOptions){
 }
 
 export function createReadmeFiles(opts: PubsOptions){
-  const readMeString = createReadmeString(opts.componentName, opts.packageName, opts.packageVersion);
+  const readMeFile = getReadmeFileName(opts.srcFile);
+  const mdExists = existsSync(join(readMeFile));
+  const readMeString = mdExists ?
+    readFile(readMeFile) :
+    createReadmeString(opts.componentName, opts.packageName, opts.packageVersion);
   const srcDir = parse(opts.srcFile).dir;
   if (!existsSync(opts.outputDir)){
     mkdirSync(opts.outputDir);
@@ -24,11 +28,11 @@ export function getReadmeFileNameFromOpts(opts: PubsOptions){
 }
 
 export function getReadmeFileName(srcFile: string){
-  return parse(srcFile).name + ".md";
+  return join(parse(srcFile).name + ".md");
 }
 
 export function createReadmeString(componentName: string, packageName: string, packageVersion: string){
-  return readTemplate('readme-template.md')
+  return README_MD
     .replace(/{PACKAGE_VERSION}/g, packageVersion)
     .replace(/{PACKAGE_NAME}/g, packageName)
     .replace(/{COMPONENT_NAME}/g, componentName);
@@ -43,7 +47,7 @@ function extractPackageNameFromFile(readmeFilePath: string) {
 export function extractPubsOptionsFromReadmeFile(readmeFilePath: string): Partial<PubsOptions> {
   if(!existsSync(readmeFilePath)) return {};
 
-  const content: string = readFileSync(readmeFilePath, {encoding: 'utf8'});
+  const content: string = readFile(readmeFilePath);
   return {
     srcFile: '',
     componentName: /componentName:(.*)\)/g.exec(content)[1],
@@ -52,11 +56,6 @@ export function extractPubsOptionsFromReadmeFile(readmeFilePath: string): Partia
   }
 }
 
-export function parseOptionsFromReadmeFile(readmeFilePath: string): PubsOptions{
-  const fileInfo = parse(readmeFilePath);
-  const words = fileInfo.name.split('-v');
-  const componentName = words[0];
-  const packageVersion = words[1];
-  const packageName = extractPackageNameFromFile(readmeFilePath);
-  return {srcFile: '', componentName, packageVersion, packageName};
+function readFile(readmeFilePath: string): string {
+  return readFileSync(readmeFilePath, {encoding: 'utf8'});
 }

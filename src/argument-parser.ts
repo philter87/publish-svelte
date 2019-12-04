@@ -4,8 +4,8 @@ var pjson = require('../package.json');
 
 commander
   .version(pjson.version)
-  .option('--keep', 'Keep the compiled files')
-  .option('--dry-run', 'Run without publishing to npm')
+  .option('-k, --keep-bundle', 'Skip clean up of bundle')
+  .option('-s, --skip-publish', 'Skip publish of bundle')
   .option('--package-version <type>', 'Set package version. Default from  md file if exists')
   .option('--package-name <type>', 'Set package name. Default from md file if exists')
   .option('-n, --component-name <type>', 'Component name. Default name of svelte file')

@@ -33,14 +33,14 @@ describe('options-utils', () => {
   });
   it('Clean up by default', () => {
     let result = mergeOptions({srcFile: SRC_FILE});
-    assert(!result.keep);
+    assert(!result.keepBundle);
   });
 });
 
 describe('Options Priority: cli arguments, options from readme, defaults', () => {
-  it('cli arguments has highest priority. Here: keep=true is used', () => {
-    let result = mergeOptions({srcFile: SRC_FILE, keep: true});
-    assert(result.keep)
+  it('cli arguments has highest priority. Here: keepBundle=true is used', () => {
+    let result = mergeOptions({srcFile: SRC_FILE, keepBundle: true});
+    assert(result.keepBundle)
   });
   it('cli argument packageVersion has priority over readme-option', () => {
     const versionExpected = '1.0.0';

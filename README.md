@@ -14,10 +14,11 @@ Publish your svelte component to npm:
 pubs ./MySvelteComponent.svelte
 ```
 
-This will automatically compile, bundle the svelte component and publish to npm. It requires you to be logged in to npm.
+This will automatically compile, bundle and publish to npm. It requires you to be logged in to npm.
+The bundle will contain a readme file, that will describe how to use the svelte component. 
 
 You can examine the bundle before you publish to npm by using these arguments:
 ```text
-pubs ./MySvelteComponent.svelte --keep --dry-run
+pubs ./MySvelteComponent.svelte --skip-publish --keep-bundle
 ```
 "--keep" to keep the bundle files, which are otherwise cleaned up and "--dry-run" to not publish to npm.

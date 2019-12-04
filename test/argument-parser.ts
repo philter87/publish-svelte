@@ -8,10 +8,10 @@ describe('argument-parser', () => {
     const packageName = 'packName';
     const packageVersion = '0.3.1';
     const componentName = 'compName';
-    const args = ['', '', '--keep', srcFile, '--dry-run', '--package-name', packageName, '-o', output, '-n', componentName,'--package-version', packageVersion];
+    const args = ['', '', '--keep-bundle', srcFile, '--skip-publish', '--package-name', packageName, '-o', output, '-n', componentName,'--package-version', packageVersion];
     const pubsOpts = parseArguments(args);
-    assert(pubsOpts.keep);
-    assert(pubsOpts.dryRun);
+    assert(pubsOpts.keepBundle);
+    assert(pubsOpts.skipPublish);
     assert(pubsOpts.packageName === packageName);
     assert(pubsOpts.packageVersion === packageVersion);
     assert(pubsOpts.componentName === componentName);

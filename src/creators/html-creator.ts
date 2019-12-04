@@ -1,9 +1,7 @@
-
-
-import {readTemplate} from "./templates/template-reader";
 import {dirname, join} from "path";
 import {writeFileSync} from "fs";
 import {PubsOptions} from "../pubs-options";
+import {INDEX_ES_HTML, INDEX_UMD_HTML} from "./templates";
 
 export const HTML_FILE_PREFIX = 'index-example-';
 
@@ -31,21 +29,19 @@ export function generateHtmlAsString(opts: PubsOptions, format) {
 }
 
 function createEsModuleHtmlExample(opts: PubsOptions) {
-  const esTemplate = readTemplate('index-example-es.html');
   const importLine = `import ${opts.componentName} from './index.mjs'`;
   const createLine = `new ${opts.componentName}({target:document.body})`;
-  return replaceTemplateWith(esTemplate, importLine, createLine);
+  return replaceTemplateWith(INDEX_ES_HTML, importLine, createLine);
 }
 
-function replaceTemplateWith(umdTemplate, importLine: string, createLine: string) {
-  return umdTemplate
+function replaceTemplateWith(template, importLine: string, createLine: string) {
+  return template
     .replace('{IMPORT_STATEMENT}', importLine)
     .replace('{NEW_COMPONENT_STATEMENT}', createLine);
 }
 
 function createUmdModuleHtmlExample(opts: PubsOptions) {
-  const umdTemplate = readTemplate('index-example-umd.html');
-  const importLine = `<script src="./index.js"></script>`
+  const importLine = `<script src="./index.js"></script>`;
   const createLine = `new ${opts.componentName}({target:document.body})`;
-  return replaceTemplateWith(umdTemplate, importLine, createLine);
+  return replaceTemplateWith(INDEX_UMD_HTML, importLine, createLine);
 }

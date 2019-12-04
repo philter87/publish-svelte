@@ -13,7 +13,7 @@ function cleanUpFile(dir, file) {
 }
 
 export function cleanUp(opts: PubsOptions) {
-  if(opts.keep) { return true }
+  if(opts.keepBundle) { return true }
   let files = ['index.js', 'index.mjs', HTML_FILE_PREFIX + 'es.html', HTML_FILE_PREFIX + 'umd.html',
     opts.componentName + ".svelte", "package.json", "README.md"];
   let exists = true;

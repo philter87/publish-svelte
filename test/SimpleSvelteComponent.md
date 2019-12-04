@@ -28,7 +28,7 @@ Below you can see how to use the component with vanilla js.
 ```html
 <body>
     <script type="module">
-        import SimpleSvelteComponent from './index.mjs'
+        import SimpleSvelteComponent from './node_module/simple-svelte-component/index.mjs'
         new SimpleSvelteComponent({target:document.body})
     </script>
 </body>
