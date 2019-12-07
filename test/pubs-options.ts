@@ -1,7 +1,6 @@
 
 import assert from 'assert';
-import {DEFAULT_INIT_VERSION, mergeOptions} from "../src/pubs-options";
-import {PACKAGE_VERSION} from "./readme-creator";
+import {DEFAULT_INIT_VERSION, incrementVersion, mergeOptions, PubsOptions} from "../src/pubs-options";
 
 const COMPONENT_NAME = "MySvelteComponent";
 const PACKAGE_NAME = "pubs-my-svelte-component";
@@ -35,6 +34,34 @@ describe('options-utils', () => {
     let result = mergeOptions({srcFile: SRC_FILE});
     assert(!result.keepBundle);
   });
+});
+
+describe('increment versions', () => {
+  it('do nothing', () => {
+    let opts: PubsOptions = {srcFile: '', packageVersion: '0.0.0'};
+    opts = incrementVersion(opts);
+    assert.equal('0.0.0', opts.packageVersion);
+  });
+  it('increment patch', () => {
+    let opts:PubsOptions = {srcFile: '', packageVersion: '0.0.0', patch: true};
+    opts = incrementVersion(opts);
+    assert.equal('0.0.1', opts.packageVersion);
+  })
+  it('increment minor', () => {
+    let opts:PubsOptions = {srcFile: '', packageVersion: '0.0.0', minor: true};
+    opts = incrementVersion(opts);
+    assert.equal('0.1.0', opts.packageVersion);
+  })
+  it('increment minor', () => {
+    let opts:PubsOptions = {srcFile: '', packageVersion: '0.0.0', major: true};
+    opts = incrementVersion(opts);
+    assert.equal('1.0.0', opts.packageVersion);
+  })
+  it('increment all', () => {
+    let opts:PubsOptions = {srcFile: '', packageVersion: '0.0.0', patch: true, minor: true, major: true};
+    opts = incrementVersion(opts);
+    assert.equal('1.1.1', opts.packageVersion);
+  })
 });
 
 describe('Options Priority: cli arguments, options from readme, defaults', () => {

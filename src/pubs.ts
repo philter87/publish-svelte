@@ -13,7 +13,7 @@ import {publish} from "./npm-publish";
 
 export function pubs(cmdOptions: Partial<PubsOptions>) {
   if (!cmdOptions.srcFile) {
-    console.log("A svelte source file is required. Example: pubs MySvelteComponent.svelte");
+    console.log("You must supply a svelte source file. Example: \"pubs MySvelteComponent.svelte\", or use \"pubs --help\"");
     return;
   }
   const opts = mergeOptions(cmdOptions);
