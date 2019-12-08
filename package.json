@@ -1,6 +1,6 @@
 {
   "name": "publish-svelte",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A command-line tool for publishing svelte components to npm",
   "main": "dist/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "tsc": "tsc"
   },
   "bin": {
-    "pubs": "dist/index.js"
+    "pelte": "dist/index.js"
   },
   "files": [
     "dist/**/*"

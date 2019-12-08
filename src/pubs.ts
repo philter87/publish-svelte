@@ -9,7 +9,6 @@ import {createPackageFile} from "./creators/package-json-creator";
 import {createReadmeFiles, extractPubsOptionsFromReadmeFile, getReadmeFileNameFromOpts} from "./creators/readme-creator";
 import {cleanUp} from "./clean-up";
 import {publish} from "./npm-publish";
-import {findNestedSvelteComponents} from "./dependency-analysor";
 import commonjs from "rollup-plugin-commonjs";
 import {copySvelteFiles} from "./svelte-copier";
 
@@ -32,7 +31,7 @@ export function pubs(cmdOptions: Partial<PubsOptions>) {
   return rollup(inputOptionsRollup)
     .then(bundle => {
       opts.watchFiles = bundle.watchFiles;
-      Promise.all(rollupWriteOpts.map(output => bundle.write(output)))
+      return Promise.all(rollupWriteOpts.map(output => bundle.write(output)))
     })
     .then(() => createHtmlExamples(opts, rollupWriteOpts))
     .then(() => copySvelteFiles(opts))

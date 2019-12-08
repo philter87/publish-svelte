@@ -15,13 +15,12 @@ export function createReadmeFiles(opts: PubsOptions){
   const readMeString = mdExists ?
     readFile(readMeFile) :
     createReadmeString(opts.componentName, opts.packageName, opts.packageVersion);
+
   const srcDir = parse(opts.srcFile).dir;
   if (!existsSync(opts.outputDir)){
     mkdirSync(opts.outputDir);
   }
-  const targetReadme = join(opts.outputDir, README_FILENAME);
-  //addBundleFile(opts, targetReadme);
-  writeFileSync(targetReadme, readMeString);
+  writeFileSync(join(opts.outputDir, README_FILENAME), readMeString);
   writeFileSync(join(srcDir, getReadmeFileNameFromOpts(opts)), readMeString);
 }
 
@@ -34,7 +33,6 @@ export function getReadmeFileName(srcFile: string){
 }
 
 export function getReadmePath(srcFile: string){
-  console.log(join(parse(srcFile).dir , getReadmeFileName(srcFile)));
   return join(parse(srcFile).dir , getReadmeFileName(srcFile));
 }
 

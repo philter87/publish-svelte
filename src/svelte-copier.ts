@@ -4,9 +4,7 @@ import {join, parse, relative} from "path";
 
 function isSvelteDependency(f, srcComponentFile) {
   const parsed = parse(f);
-  if (parsed.name === srcComponentFile) {
-    return false;
-  } else if (parsed.ext === '.svelte') {
+  if (parsed.ext === '.svelte' && parsed.name !== srcComponentFile) {
     return true;
   }
   return false;
@@ -24,7 +22,6 @@ export function findNestedSvelteComponents(opts:PubsOptions) {
 export function copySvelteFiles(opts: PubsOptions) {
   const targetSvelteFile = join(opts.outputDir, opts.componentName + '.svelte');
   copyFileSync(opts.srcFile, targetSvelteFile);
-  //addBundleFile(opts, targetSvelteFile);
   const srcDir = parse(opts.srcFile).dir;
   const nestedSvelteComponents = findNestedSvelteComponents(opts);
 
