@@ -4,6 +4,11 @@ import {
   getReadmeFileName
 } from "./creators/readme-creator";
 
+export class PubsStats {
+  nestedSvelteComponents: string[] = [];
+  bundleFiles: string[] = [];
+}
+
 export interface PubsOptions {
   srcFile: string;
   keepBundle?: boolean;
@@ -15,6 +20,7 @@ export interface PubsOptions {
   patch?: boolean;
   minor?: boolean;
   major?: boolean;
+  watchFiles?: string[];
 }
 
 export const DEFAULT_INIT_VERSION = '0.0.1';

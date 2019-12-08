@@ -18,7 +18,7 @@ const pubsOpts = {srcFile, componentName, packageName, packageVersion, outputDir
 
 function cleanUpMdFiles(opts: PubsOptions){
   unlinkSync(join(opts.outputDir, README_FILENAME));
-  rmdirSync(opts.outputDir);
+  //rmdirSync(opts.outputDir);
 }
 
 describe('readme creator', () => {

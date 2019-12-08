@@ -19,7 +19,9 @@ export function createReadmeFiles(opts: PubsOptions){
   if (!existsSync(opts.outputDir)){
     mkdirSync(opts.outputDir);
   }
-  writeFileSync(join(opts.outputDir, README_FILENAME), readMeString);
+  const targetReadme = join(opts.outputDir, README_FILENAME);
+  //addBundleFile(opts, targetReadme);
+  writeFileSync(targetReadme, readMeString);
   writeFileSync(join(srcDir, getReadmeFileNameFromOpts(opts)), readMeString);
 }
 

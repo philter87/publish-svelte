@@ -32,7 +32,7 @@ You can also overwrite the default settings with this command:
 pubs ./MySvelteComponent.svelte --package-name awesome-svelte-component
 ```
 
-You can examine the bundle with:
+You can examine the bundle without publishing to npm with:
 ```text
 pubs ./MySvelteComponent.svelte --skip-publish --keep-bundle
 ```
