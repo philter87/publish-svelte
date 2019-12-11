@@ -1,16 +1,14 @@
-import {PubsOptions} from "./pubs-options";
+import {PelteOptions} from "./pelte-options";
 import {copyFileSync, mkdirSync} from "fs";
 import {join, parse, relative} from "path";
 
 function isSvelteDependency(f, srcComponentFile) {
   const parsed = parse(f);
-  if (parsed.ext === '.svelte' && parsed.name !== srcComponentFile) {
-    return true;
-  }
-  return false;
+  return parsed.ext === '.svelte' && parsed.name !== srcComponentFile;
+
 }
 
-export function findNestedSvelteComponents(opts:PubsOptions) {
+export function findNestedSvelteComponents(opts:PelteOptions) {
   const srcComponentFile = parse(opts.srcFile).name;
   if(opts.watchFiles) {
     return opts.watchFiles.filter( f => isSvelteDependency(f, srcComponentFile));
@@ -19,7 +17,7 @@ export function findNestedSvelteComponents(opts:PubsOptions) {
   }
 }
 
-export function copySvelteFiles(opts: PubsOptions) {
+export function copySvelteFiles(opts: PelteOptions) {
   const targetSvelteFile = join(opts.outputDir, opts.componentName + '.svelte');
   copyFileSync(opts.srcFile, targetSvelteFile);
   const srcDir = parse(opts.srcFile).dir;

@@ -1,6 +1,15 @@
-const path = require('path');
+import {readFileSync} from "fs";
 
-let filePaht = "sd/long/filePath/asdlsd.js";
+const svelte = require('svelte/compiler');
 
-console.log(path.parse(filePaht));
-console.log(path.dirname(filePaht))
+const {
+  js,
+  css,
+  ast,
+  warnings,
+  vars,
+  stats
+} = svelte.compile('SimpleSvelteComponent.svelte');
+console.log(vars, js);
+const content = readFileSync('SimpleSvelteComponent.svelte', {encoding: 'utf8'});
+

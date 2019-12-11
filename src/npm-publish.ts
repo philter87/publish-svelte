@@ -1,8 +1,8 @@
 import {execSync} from "child_process";
-import {PubsOptions} from "./pubs-options";
+import {PelteOptions} from "./pelte-options";
 import {parse} from "path";
 
-export function publish(opts: PubsOptions) {
+export function publish(opts: PelteOptions) {
   if(!opts.skipPublish) {
     try {
       const result = execSync('npm publish ' + opts.outputDir, {stdio: 'pipe', encoding: 'utf8'});

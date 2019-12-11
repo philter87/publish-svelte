@@ -4,17 +4,17 @@ import svelte from 'rollup-plugin-svelte';
 import resolve from 'rollup-plugin-node-resolve';
 import {INDEX_ES, INDEX_UMD} from "./constants";
 import {createHtmlExamples} from './creators/html-creator'
-import {mergeOptions, PubsOptions, PubsStats} from "./pubs-options";
+import {mergeOptions, PelteOptions } from "./pelte-options";
 import {createPackageFile} from "./creators/package-json-creator";
-import {createReadmeFiles, extractPubsOptionsFromReadmeFile, getReadmeFileNameFromOpts} from "./creators/readme-creator";
+import {createReadmeFiles } from "./creators/readme-creator";
 import {cleanUp} from "./clean-up";
 import {publish} from "./npm-publish";
 import commonjs from "rollup-plugin-commonjs";
 import {copySvelteFiles} from "./svelte-copier";
 
-export function pubs(cmdOptions: Partial<PubsOptions>) {
+export function pelte(cmdOptions: Partial<PelteOptions>) {
   if (!cmdOptions.srcFile) {
-    console.log("You must supply a svelte source file. Example: \"pubs MySvelteComponent.svelte\", or use \"pubs --help\"");
+    console.log("You must supply a svelte source file. Example: \"pelte MySvelteComponent.svelte\", or use \"pelte --help\"");
     return;
   }
   const opts = mergeOptions(cmdOptions);
@@ -38,6 +38,5 @@ export function pubs(cmdOptions: Partial<PubsOptions>) {
     .then(() => createPackageFile(opts))
     .then(() => createReadmeFiles(opts))
     .then(() => publish(opts))
-    .then(() => cleanUp(opts))
-    .catch(d => console.log("Error", d));
+    .then(() => cleanUp(opts));
 }

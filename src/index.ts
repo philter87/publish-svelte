@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-import {pubs} from "./pubs";
+import {pelte} from "./pelte";
 import {parseArguments} from "./argument-parser";
 
-const pubsOptions = parseArguments(process.argv);
+const pelteOptions = parseArguments(process.argv);
 
-pubs(pubsOptions);
+pelte(pelteOptions);

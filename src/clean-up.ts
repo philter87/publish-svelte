@@ -1,11 +1,11 @@
-import {PubsOptions} from "./pubs-options";
+import {PelteOptions} from "./pelte-options";
 import {existsSync, lstatSync, readdirSync, rmdirSync, unlinkSync} from "fs";
 
 export function deleteFolderRecursive(path: string) {
   var files = [];
   if( existsSync(path) ) {
     files = readdirSync(path);
-    files.forEach(function(file,index){
+    files.forEach(function(file){
       var curPath = path + "/" + file;
       if(lstatSync(curPath).isDirectory()) { // recurse
         deleteFolderRecursive(curPath);
@@ -17,7 +17,7 @@ export function deleteFolderRecursive(path: string) {
   }
 }
 
-export function cleanUp(opts: PubsOptions) {
+export function cleanUp(opts: PelteOptions) {
   if(opts.keepBundle) { return }
   //let files = ['index.js', 'index.mjs', opts.componentName + ".svelte", "package.json", "README.md"];
   deleteFolderRecursive(opts.outputDir);

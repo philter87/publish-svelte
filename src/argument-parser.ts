@@ -1,5 +1,5 @@
 import commander = require("commander");
-import {PubsOptions} from "./pubs-options";
+import {PelteOptions} from "./pelte-options";
 var pjson = require('../package.json');
 
 commander
@@ -19,7 +19,7 @@ function removeUndefined(opts) {
   return opts;
 }
 
-export function parseArguments(processArgv: string[]): Partial<PubsOptions> {
+export function parseArguments(processArgv: string[]): Partial<PelteOptions> {
   const parsed = commander.parse(processArgv);
   let opts = removeUndefined(parsed.opts());
   return Object.assign({srcFile: parsed.args[0]}, opts);

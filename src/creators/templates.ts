@@ -69,4 +69,7 @@ Below you can see how to use the component with vanilla js.
 </script>
 <{COMPONENT_NAME}/>
 \`\`\`
+
+#### Pelte
+This component was created by [pelte](https://www.npmjs.com/package/publish-svelte) (aka publish-svelte)
 `;

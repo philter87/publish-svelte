@@ -1,15 +1,15 @@
-import {PubsOptions} from "../pubs-options";
+import {PelteOptions} from "../pelte-options";
 import {join, parse} from "path";
 import {writeFileSync, mkdirSync, existsSync, readFileSync, unlinkSync} from "fs";
 import {README_MD} from "./templates";
 
 export const README_FILENAME = 'README.md';
 
-export function deleteReadmeVersionFile(opts: PubsOptions){
+export function deleteReadmeVersionFile(opts: PelteOptions){
   unlinkSync(join(parse(opts.srcFile).dir, getReadmeFileNameFromOpts(opts)))
 }
 
-export function createReadmeFiles(opts: PubsOptions){
+export function createReadmeFiles(opts: PelteOptions){
   const readMeFile = getReadmePath(opts.srcFile);
   const mdExists = existsSync(join(readMeFile));
   const readMeString = mdExists ?
@@ -24,7 +24,7 @@ export function createReadmeFiles(opts: PubsOptions){
   writeFileSync(join(srcDir, getReadmeFileNameFromOpts(opts)), readMeString);
 }
 
-export function getReadmeFileNameFromOpts(opts: PubsOptions){
+export function getReadmeFileNameFromOpts(opts: PelteOptions){
   return getReadmeFileName(opts.srcFile);
 }
 
@@ -43,13 +43,7 @@ export function createReadmeString(componentName: string, packageName: string, p
     .replace(/{COMPONENT_NAME}/g, componentName);
 }
 
-function extractPackageNameFromFile(readmeFilePath: string) {
-  const fileContent: string = readFileSync(readmeFilePath, {encoding: 'utf8'});
-  const firstLine = fileContent.split('\n')[0];
-  return firstLine.replace('#', '').trim();
-}
-
-export function extractPubsOptionsFromReadmeFile(readmeFilePath: string): Partial<PubsOptions> {
+export function extractPubsOptionsFromReadmeFile(readmeFilePath: string): Partial<PelteOptions> {
   if(!existsSync(readmeFilePath)) return {};
 
   const content: string = readFile(readmeFilePath);

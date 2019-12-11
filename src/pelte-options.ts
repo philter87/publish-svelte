@@ -9,7 +9,7 @@ export class PubsStats {
   bundleFiles: string[] = [];
 }
 
-export interface PubsOptions {
+export interface PelteOptions {
   srcFile: string;
   keepBundle?: boolean;
   skipPublish?: boolean;
@@ -25,13 +25,13 @@ export interface PubsOptions {
 
 export const DEFAULT_INIT_VERSION = '0.0.1';
 
-export function mergeOptions(cliArguments: Partial<PubsOptions>): PubsOptions {
+export function mergeOptions(cliArguments: Partial<PelteOptions>): PelteOptions {
   const defaultOpts = parseDefaultOptionsFromFileName(cliArguments.srcFile);
   const mdOpts = extractPubsOptionsFromReadmeFile(getReadmeFileName(cliArguments.srcFile));
   return {...defaultOpts, ...mdOpts, ...cliArguments};
 }
 
-export function incrementVersion(opts: PubsOptions){
+export function incrementVersion(opts: PelteOptions){
   if(opts.patch || opts.minor || opts.major) {
     const versions = opts.packageVersion.split(".");
     let patch = opts.patch ? parseInt(versions[0])+1 : versions[0];
@@ -42,7 +42,7 @@ export function incrementVersion(opts: PubsOptions){
   return opts;
 }
 
-export function parseDefaultOptionsFromFileName(srcFile: string): PubsOptions {
+export function parseDefaultOptionsFromFileName(srcFile: string): PelteOptions {
   let parsed = parse(srcFile);
   return {
     srcFile: srcFile,
@@ -50,7 +50,7 @@ export function parseDefaultOptionsFromFileName(srcFile: string): PubsOptions {
     skipPublish: false,
     outputDir: join(parsed.dir, parsed.name),
     componentName: parsed.name,
-    packageName: 'pubs-' + toKebabCase(parsed.name),
+    packageName: 'pelte-' + toKebabCase(parsed.name),
     packageVersion: DEFAULT_INIT_VERSION
   }
 }

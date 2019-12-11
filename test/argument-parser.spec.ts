@@ -9,13 +9,13 @@ describe('argument-parser', () => {
     const packageVersion = '0.3.1';
     const componentName = 'compName';
     const args = ['', '', '--keep-bundle', srcFile, '--skip-publish', '--package-name', packageName, '-o', output, '-n', componentName,'--package-version', packageVersion];
-    const pubsOpts = parseArguments(args);
-    assert(pubsOpts.keepBundle);
-    assert(pubsOpts.skipPublish);
-    assert(pubsOpts.packageName === packageName);
-    assert(pubsOpts.packageVersion === packageVersion);
-    assert(pubsOpts.componentName === componentName);
-    assert(pubsOpts.srcFile === srcFile);
-    assert(pubsOpts.outputDir === output);
+    const opts = parseArguments(args);
+    assert(opts.keepBundle);
+    assert(opts.skipPublish);
+    assert(opts.packageName === packageName);
+    assert(opts.packageVersion === packageVersion);
+    assert(opts.componentName === componentName);
+    assert(opts.srcFile === srcFile);
+    assert(opts.outputDir === output);
   })
 });

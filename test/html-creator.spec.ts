@@ -1,8 +1,8 @@
 import assert from 'assert';
 import {generateHtmlAsString} from "../src/creators/html-creator";
-import {PubsOptions} from "../src/pubs-options";
+import {PelteOptions} from "../src/pelte-options";
 const COMPONENT_NAME = "TestComponentName";
-const PUBS_OPTIONS:PubsOptions = {srcFile: '', componentName: COMPONENT_NAME};
+const PUBS_OPTIONS:PelteOptions = {srcFile: '', componentName: COMPONENT_NAME};
 
 describe('htmlCreator', () => {
   describe('HTML with ES module', () => {
