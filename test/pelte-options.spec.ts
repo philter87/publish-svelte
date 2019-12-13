@@ -64,15 +64,19 @@ describe('increment versions', () => {
   })
 });
 
-describe('Options Priority: cli arguments, options from readme, defaults', () => {
+describe('Options Priority: cli arguments, options from json, defaults', () => {
   it('cli arguments has highest priority. Here: keepBundle=true is used', () => {
     let result = mergeOptions({srcFile: SRC_FILE, keepBundle: true});
     assert(result.keepBundle)
   });
-  it('cli argument packageVersion has priority over readme-option', () => {
+  it('cli argument packageVersion has priority over json-option', () => {
     const versionExpected = '1.0.0';
-    let result = mergeOptions({srcFile: 'SimpleSvelteComponent.svelte', packageVersion: versionExpected});
+    let result = mergeOptions({srcFile: 'test/SimpleSvelteComponent.svelte', packageVersion: versionExpected});
     assert.equal(result.packageVersion, versionExpected);
+  });
+  it('json-option packageVersion has priority over default', () => {
+    let result = mergeOptions({srcFile: 'test/SimpleSvelteComponent.svelte'});
+    assert.equal(result.packageVersion, '0.0.5');
   });
   it('default options are preserved', () => {
     let result = mergeOptions({srcFile: SRC_FILE});

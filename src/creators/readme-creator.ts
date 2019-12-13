@@ -1,60 +1,25 @@
 import {PelteOptions} from "../pelte-options";
-import {join, parse} from "path";
-import {writeFileSync, mkdirSync, existsSync, readFileSync, unlinkSync} from "fs";
+import {join } from "path";
+import {writeFileSync, existsSync, unlinkSync} from "fs";
 import {README_MD} from "./templates";
+import {changeExtension, createDir, readFileUtf8} from "../pelte-util";
 
 export const README_FILENAME = 'README.md';
 
 export function deleteReadmeVersionFile(opts: PelteOptions){
-  unlinkSync(join(parse(opts.srcFile).dir, getReadmeFileNameFromOpts(opts)))
+  unlinkSync(changeExtension(opts.srcFile, 'md'));
 }
 
 export function createReadmeFiles(opts: PelteOptions){
-  const readMeFile = getReadmePath(opts.srcFile);
+  const readMeFile = changeExtension(opts.srcFile, 'md');
   const mdExists = existsSync(join(readMeFile));
   const readMeString = mdExists ?
-    readFile(readMeFile) :
-    createReadmeString(opts.componentName, opts.packageName, opts.packageVersion);
+    readFileUtf8(readMeFile) :
+    README_MD;
 
-  const srcDir = parse(opts.srcFile).dir;
-  if (!existsSync(opts.outputDir)){
-    mkdirSync(opts.outputDir);
+  createDir(opts);
+  if(!opts.init) {
+    writeFileSync(join(opts.outputDir, README_FILENAME), readMeString);
   }
-  writeFileSync(join(opts.outputDir, README_FILENAME), readMeString);
-  writeFileSync(join(srcDir, getReadmeFileNameFromOpts(opts)), readMeString);
-}
-
-export function getReadmeFileNameFromOpts(opts: PelteOptions){
-  return getReadmeFileName(opts.srcFile);
-}
-
-export function getReadmeFileName(srcFile: string){
-  return join(parse(srcFile).name + ".md");
-}
-
-export function getReadmePath(srcFile: string){
-  return join(parse(srcFile).dir , getReadmeFileName(srcFile));
-}
-
-export function createReadmeString(componentName: string, packageName: string, packageVersion: string){
-  return README_MD
-    .replace(/{PACKAGE_VERSION}/g, packageVersion)
-    .replace(/{PACKAGE_NAME}/g, packageName)
-    .replace(/{COMPONENT_NAME}/g, componentName);
-}
-
-export function extractPubsOptionsFromReadmeFile(readmeFilePath: string): Partial<PelteOptions> {
-  if(!existsSync(readmeFilePath)) return {};
-
-  const content: string = readFile(readmeFilePath);
-  return {
-    srcFile: '',
-    componentName: /componentName:(.*)\)/g.exec(content)[1],
-    packageVersion: /packageVersion:(.*)\)/g.exec(content)[1],
-    packageName: /packageName:(.*)\)/g.exec(content)[1],
-  }
-}
-
-function readFile(readmeFilePath: string): string {
-  return readFileSync(readmeFilePath, {encoding: 'utf8'});
+  writeFileSync(changeExtension(opts.srcFile, 'md'), readMeString);
 }

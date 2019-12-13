@@ -1,6 +1,6 @@
 import {
   createReadmeFiles,
-  deleteReadmeVersionFile, extractPubsOptionsFromReadmeFile,
+  deleteReadmeVersionFile,
   README_FILENAME
 } from "../src/creators/readme-creator";
 import {join} from 'path';
@@ -33,12 +33,6 @@ const componentName1 = 'SimpleSvelteComponent';
 export const PACKAGE_VERSION = '0.1.5';
 const PACKAGE_NAME = 'simple-svelte-component';
 describe('readme file parser', () => {
-  it('PelteOptions from readme file', () => {
-    let opts = extractPubsOptionsFromReadmeFile(join('.','test',  componentName1 + '.md'));
-    assert(opts.packageVersion === PACKAGE_VERSION);
-    assert(opts.componentName === componentName1);
-    assert(opts.packageName === PACKAGE_NAME );
-  });
   it('Use existing md file instead of creating a new', () => {
     let opts: PelteOptions = {
       srcFile: join(__dirname, componentName1 + '.svelte'),

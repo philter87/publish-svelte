@@ -1,13 +1,6 @@
 import {join, parse} from "path";
-import {
-  extractPubsOptionsFromReadmeFile,
-  getReadmeFileName
-} from "./creators/readme-creator";
-
-export class PubsStats {
-  nestedSvelteComponents: string[] = [];
-  bundleFiles: string[] = [];
-}
+import {extractPelteOptionsFromJson } from "./creators/package-json-creator";
+import {detectCustomComponentOpts, WebComponentInfo} from "./pelte-util";
 
 export interface PelteOptions {
   srcFile: string;
@@ -17,17 +10,20 @@ export interface PelteOptions {
   packageName?: string;
   packageVersion?: string;
   componentName?: string;
+  init?: boolean;
   patch?: boolean;
   minor?: boolean;
   major?: boolean;
   watchFiles?: string[];
+  webComponentInfo?: WebComponentInfo;
 }
 
 export const DEFAULT_INIT_VERSION = '0.0.1';
 
 export function mergeOptions(cliArguments: Partial<PelteOptions>): PelteOptions {
   const defaultOpts = parseDefaultOptionsFromFileName(cliArguments.srcFile);
-  const mdOpts = extractPubsOptionsFromReadmeFile(getReadmeFileName(cliArguments.srcFile));
+  const mdOpts = extractPelteOptionsFromJson(cliArguments);
+  mdOpts.webComponentInfo = detectCustomComponentOpts(cliArguments);
   return {...defaultOpts, ...mdOpts, ...cliArguments};
 }
 

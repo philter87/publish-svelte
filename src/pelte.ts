@@ -18,9 +18,11 @@ export function pelte(cmdOptions: Partial<PelteOptions>) {
     return;
   }
   const opts = mergeOptions(cmdOptions);
+
+
   const inputOptionsRollup = {
     input: opts.srcFile,
-    plugins: [svelte(), resolve(), commonjs()]
+    plugins: [svelte({customElement: opts.webComponentInfo.exists}), resolve(), commonjs()]
   };
 
   const rollupWriteOpts: OutputOptions[] = [
@@ -28,6 +30,12 @@ export function pelte(cmdOptions: Partial<PelteOptions>) {
     {format: 'es', file: join(opts.outputDir, INDEX_ES)}
   ];
 
+
+  createPackageFile(opts);
+  createReadmeFiles(opts);
+  if(opts.init) {
+    return;
+  }
   return rollup(inputOptionsRollup)
     .then(bundle => {
       opts.watchFiles = bundle.watchFiles;
@@ -35,8 +43,6 @@ export function pelte(cmdOptions: Partial<PelteOptions>) {
     })
     .then(() => createHtmlExamples(opts, rollupWriteOpts))
     .then(() => copySvelteFiles(opts))
-    .then(() => createPackageFile(opts))
-    .then(() => createReadmeFiles(opts))
     .then(() => publish(opts))
     .then(() => cleanUp(opts));
 }

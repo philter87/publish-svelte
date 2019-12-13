@@ -4,6 +4,7 @@ import { join, parse } from 'path';
 import {PelteOptions} from "../src/pelte-options";
 import {existsSync, unlinkSync} from "fs";
 import {cleanUp} from "../src/clean-up";
+import {changeExtension} from "../src/pelte-util";
 
 const TEST_COMPONENT = "TestLibImport";
 const PARENT_COMPONENT = "Parent";
@@ -31,8 +32,9 @@ function verifyAndCleanUp(opts: PelteOptions, otherFiles: string[] = []) {
   for(let file of files) {
     assert(existsSync(join(opts.outputDir, file)), "File was not created in bundle: " + file);
   }
-  // md file is deleted
-  unlinkSync(opts.outputDir+".md");
+
+  unlinkSync(changeExtension(opts.srcFile, "md"));
+  unlinkSync(changeExtension(opts.srcFile, "json"));
 
   opts.keepBundle = false;
   cleanUp(opts);

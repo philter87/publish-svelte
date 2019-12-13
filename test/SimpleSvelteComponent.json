@@ -1,0 +1,7 @@
+{
+  "name": "pelte-simple-svelte-component",
+  "version": "0.0.5",
+  "svelte": "SimpleSvelteComponent.svelte",
+  "main": "index.js",
+  "module": "index.mjs"
+}
