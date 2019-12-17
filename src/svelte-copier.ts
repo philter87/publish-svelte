@@ -27,7 +27,7 @@ export function copySvelteFiles(opts: PelteOptions) {
     let parsed = parse(svelteDependency);
     const relativeDir = relative(srcDir, parsed.dir);
     if(relativeDir.startsWith('..')) {
-      console.error('The component "' + parse(opts.srcFile).base + '" depends on "' + parsed.base + '". This is not allowed. "' + parsed.base + '" must be located in the same folder or in a child folder ');
+      console.error('The component "' + parse(opts.srcFile).base + '" depends on "' + parsed.base + '". This is not allowed. "' + parsed.base + '" must be located in the same folder or in a child folder. The javascript modules will work, but another svelte project will not be able to use this bundle');
     } else {
       mkdirSync(join(opts.outputDir, relativeDir), {recursive: true});
       const target = join(opts.outputDir, relativeDir, parsed.base);

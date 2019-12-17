@@ -4,7 +4,6 @@ var pjson = require('../package.json');
 
 commander
   .version(pjson.version)
-  .option('--init', 'Initialize the component. The will create a md file and json file next to the Svelte source file where you can adjust settings like package name and version')
   .option('-k, --keep-bundle', 'Skip clean up of bundle')
   .option('-s, --skip-publish', 'Skip publish of bundle')
   .option('--package-version <type>', 'Set package version. Default from  md file if exists')

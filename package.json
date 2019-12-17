@@ -1,7 +1,8 @@
 {
   "name": "publish-svelte",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "description": "A command-line tool for publishing svelte components to npm",
+  "prepublishOnly": "tsc",
   "main": "dist/index.js",
   "scripts": {
     "test": "mocha -r ts-node/register test/**.ts",
@@ -29,6 +30,8 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^4.0.1",
+    "prompts": "^2.3.0",
+    "publish-svelte": "^0.2.0",
     "rollup": "^1.25.1",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",

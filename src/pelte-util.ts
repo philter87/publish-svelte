@@ -1,6 +1,7 @@
 import {join, parse} from "path";
 import {PelteOptions} from "./pelte-options";
 import {existsSync, mkdirSync, readFileSync} from "fs";
+import {green} from "kleur";
 
 export interface FieldInfo {
   name: string;
@@ -54,19 +55,19 @@ export function detectCustomComponent(content: string): WebComponentInfo {
 export function findEventEmitters(content: string): string[] {
   const eventNames = [];
   const dispatchRegex = /dispatch\s*\(\s*['"]?(.+?)['"]?\s*,/g;
-  iterateMatches(dispatchRegex, content, match => eventNames.push(match[1]))
+  iterateMatches(dispatchRegex, content, match => eventNames.push(match[1]));
   return eventNames;
 }
 
 export function findExportedFields(content: string): FieldInfo[] {
   const fields: FieldInfo[] = [];
   //                        export   let    name   =     " value  "       ;
-  const regexFieldDefault = /export\s+(let|const)\s+(\w+)\s*=\s*['"]?(.*?)['"]?\s*\;/g;
-  iterateMatches(regexFieldDefault, content, m => fields.push({name: m[2], defaultValue: m[3]}))
+  const regexFieldDefault = /export\s+(let|const)\s+(\w+)\s*=\s*['"]?(.*?)['"]?\s*;/g;
+  iterateMatches(regexFieldDefault, content, m => fields.push({name: m[2], defaultValue: m[3]}));
 
   //                      export      let         name        ;
   const regexFieldNoDefault = /export\s+(let|const)\s+(\w+)\s*;/g;
-  iterateMatches(regexFieldNoDefault, content, m => fields.push({name: m[2], defaultValue: m[3]}))
+  iterateMatches(regexFieldNoDefault, content, m => fields.push({name: m[2], defaultValue: m[3]}));
   return fields;
 }
 
@@ -76,4 +77,9 @@ function iterateMatches(regex: RegExp, content: string, callback: (RegExpExecArr
     callback(match);
     match = regex.exec(content);
   }
+}
+
+export function sayHello() {
+  console.log(green('Hello!!!'));
+  console.log(green('My name is Pelte and I will help you share svelte component with the world.'));
 }
