@@ -1,7 +1,8 @@
-import {readFileSync} from "fs";
-
+const fs = require('fs');
 const svelte = require('svelte/compiler');
 
+const start = new Date().getTime();
+const content = fs.readFileSync('Simple.svelte', {encoding: 'utf8'});
 const {
   js,
   css,
@@ -9,7 +10,6 @@ const {
   warnings,
   vars,
   stats
-} = svelte.compile('SimpleSvelteComponent.svelte');
-console.log(vars, js);
-const content = readFileSync('SimpleSvelteComponent.svelte', {encoding: 'utf8'});
-
+} = svelte.compile(content);
+console.log(vars);
+console.log(new Date().getTime() - start);

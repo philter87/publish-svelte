@@ -11,18 +11,13 @@ import {cleanUp} from "./clean-up";
 import {publish} from "./npm-publish";
 import commonjs from "rollup-plugin-commonjs";
 import {copySvelteFiles} from "./svelte-copier";
-import { red } from 'kleur';
 
 export function pelte(cmdOptions: Partial<PelteOptions>) {
-  if (!cmdOptions.srcFile) {
-    console.log(red('You must supply a svelte source file. Example: "pelte MySvelteComponent.svelte"'));
-    return;
-  }
   const opts = mergeOptions(cmdOptions);
 
   const inputOptionsRollup = {
     input: opts.srcFile,
-    plugins: [svelte({customElement: opts.webComponentInfo.exists}), resolve(), commonjs()]
+    plugins: [svelte({customElement: opts.webComponentInfo.exists, accessors: true}), resolve(), commonjs()]
   };
 
   const rollupWriteOpts: OutputOptions[] = [

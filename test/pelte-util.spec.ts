@@ -1,24 +1,33 @@
-import {detectCustomComponent, findEventEmitters, findExportedFields} from "../src/pelte-util";
+import {detectCustomComponent, findEventEmitters, findExportedFields, findVars} from "../src/pelte-util";
 import assert from 'assert';
+
+const NAMES = ['n1','n2','n3','n4','n5','n6','n7'];
+const VALUES = ['a ', 'a b', '?#¤','null', 1, 2, null];
+const SCRIPT = `<script>
+  let nameShouldNotBeIncluded = 123;
+  export let ${NAMES[0]} = "${VALUES[0]}";
+  export let ${NAMES[1]}= '${VALUES[1]}';
+  export    let     ${NAMES[2]}  =  '${VALUES[2]}'    ;
+  export let ${NAMES[3]}  = ${VALUES[3]} ;
+  export let ${NAMES[4]} = ${VALUES[4]};
+  export const ${NAMES[5]} = ${VALUES[5]};
+  export let ${NAMES[6]};
+</script>`;
 
 describe('Find exported fields', () => {
   it('exported fields', () => {
-    const names = ['n1','n2','n3','n4','n5','n6','n7'];
-    const values = ['a ', 'a b', '?#¤','null', 1, 2, null];
-    const script = `
-      export let ${names[0]} = "${values[0]}";
-      export let ${names[1]}= '${values[1]}';
-      export    let     ${names[2]}  =  '${values[2]}'    ;
-      export let ${names[3]}  = ${values[3]} ;
-      export let ${names[4]} = ${values[4]};
-      export const ${names[5]} = ${values[5]};
-      export let ${names[6]};
-    `;
-    const fields = findExportedFields(script);
-    assert.equal(names.length, fields.length, "Names should match field found");
+    const fields = findExportedFields(SCRIPT);
+    assert.equal(NAMES.length, fields.length, "Names should match field found");
     for (let i = 0; i < fields.length; i++) {
-      assert.equal(fields[i].name, names[i]);
-      assert.equal(fields[i].defaultValue, values[i])
+      assert.equal(fields[i].name, NAMES[i]);
+      assert.equal(fields[i].defaultValue, VALUES[i])
+    }
+  });
+  it('exported fields svelte compiler', () => {
+    const fieldName = findVars(SCRIPT);
+    assert.equal(NAMES.length, fieldName.length, "Names should match field found");
+    for (let i = 0; i < fieldName.length; i++) {
+      assert.equal(fieldName[i], NAMES[i]);
     }
   });
   it('event emitters', () => {

@@ -1,7 +1,7 @@
 import {PelteOptions} from "../pelte-options";
 import {join } from "path";
 import {writeFileSync, existsSync, unlinkSync} from "fs";
-import {README_MD} from "./templates";
+import {createReadmeFromOpts } from "./templates";
 import {changeExtension, createDir, readFileUtf8} from "../pelte-util";
 
 export const README_FILENAME = 'README.md';
@@ -15,7 +15,7 @@ export function createReadmeFiles(opts: PelteOptions){
   const mdExists = existsSync(join(readMeFile));
   const readMeString = mdExists ?
     readFileUtf8(readMeFile) :
-    README_MD;
+    createReadmeFromOpts(opts);
 
   createDir(opts);
   if(!opts.init) {

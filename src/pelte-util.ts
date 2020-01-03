@@ -2,6 +2,7 @@ import {join, parse} from "path";
 import {PelteOptions} from "./pelte-options";
 import {existsSync, mkdirSync, readFileSync} from "fs";
 import {green} from "kleur";
+import {compile} from 'svelte/compiler';
 
 export interface FieldInfo {
   name: string;
@@ -57,6 +58,17 @@ export function findEventEmitters(content: string): string[] {
   const dispatchRegex = /dispatch\s*\(\s*['"]?(.+?)['"]?\s*,/g;
   iterateMatches(dispatchRegex, content, match => eventNames.push(match[1]));
   return eventNames;
+}
+
+export function findVarsFromFile(opts: Partial<PelteOptions>): string[] {
+  try {
+    return findVars(readFileUtf8(opts.srcFile));
+  } catch (e) {
+    return [];
+  }
+}
+export function findVars(content: string): string[] {
+  return compile(content).vars.filter( v => v.module == false && v.export_name).map( v => v.export_name);
 }
 
 export function findExportedFields(content: string): FieldInfo[] {
