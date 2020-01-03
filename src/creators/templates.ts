@@ -90,7 +90,7 @@ Below you can see how to use the component with vanilla js.
 You can use it as a web component.
 \`\`\`html
 <head>
-  <script src="./node_module/{PACKAGE_NAME}/index.js"></script>
+  <script src="https://unpkg.com/${opts.packageName}@${opts.packageVersion}/index.js"></script>
 </head>
 <body>
   <${getCeName(opts)} ${getCeProp(opts)}/>    
