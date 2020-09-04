@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
     import first from 'lodash/first';
-    export let name = 'Philip';
+    export let name: string = 'Philip';
     console.log('Lodash dependency', first([1,2,3,4]))
 </script>
 

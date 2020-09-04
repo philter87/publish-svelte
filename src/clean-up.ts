@@ -1,5 +1,6 @@
 import {PelteOptions} from "./pelte-options";
 import {existsSync, lstatSync, readdirSync, rmdirSync, unlinkSync} from "fs";
+import {getTsConfigPath} from "./creators/ts-config-creator";
 
 export function deleteFolderRecursive(path: string) {
   var files = [];
@@ -21,4 +22,5 @@ export function cleanUp(opts: PelteOptions) {
   if(opts.keepBundle) { return }
   //let files = ['index.js', 'index.mjs', opts.componentName + ".svelte", "package.json", "README.md"];
   deleteFolderRecursive(opts.outputDir);
+  unlinkSync(getTsConfigPath(opts))
 }

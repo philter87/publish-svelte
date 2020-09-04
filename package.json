@@ -1,6 +1,6 @@
 {
   "name": "publish-svelte",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "A command-line tool for publishing svelte components to npm",
   "prepublishOnly": "tsc",
   "main": "dist/index.js",
@@ -31,21 +31,24 @@
   "dependencies": {
     "commander": "^4.0.1",
     "prompts": "^2.3.0",
-    "publish-svelte": "^0.2.0",
-    "rollup": "^1.25.1",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-svelte": "^5.1.0",
-    "svelte": "^3.12.1"
+    "rollup": "^2.3.4",
+    "@rollup/plugin-commonjs": "^14.0.0",
+    "@rollup/plugin-node-resolve": "^8.0.0",
+    "rollup-plugin-svelte": "^6.0.0",
+    "svelte": "^3.12.1",
+    "svelte-check": "^1.0.0",
+    "svelte-preprocess": "^4.0.0",
+    "@rollup/plugin-typescript": "^4.0.0",
+    "typescript": "^3.9.3",
+    "tslib": "^2.0.0",
+    "@tsconfig/svelte": "^1.0.0"
   },
   "devDependencies": {
-    "@types/commander": "^2.12.2",
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.12.7",
     "lodash": "^4.17.15",
     "mocha": "^6.2.2",
     "ts-node": "^8.4.1",
-    "tslint": "^6.0.0-beta0",
-    "typescript": "^3.6.4"
+    "tslint": "^6.0.0-beta0"
   }
 }
