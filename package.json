@@ -3,7 +3,7 @@
   "version": "0.6.0",
   "description": "A command-line tool for publishing svelte components to npm",
   "prepublishOnly": "tsc",
-  "main": "dist/index.js",
+  "main": "dist/pelte.js",
   "scripts": {
     "test": "mocha -r ts-node/register test/**.ts",
     "tsc": "tsc"

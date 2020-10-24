@@ -50,6 +50,39 @@ Then you can use the web component like this:
 
 You can read more on the official svelte page [svelte page](https://svelte.dev/docs#Custom_element_API)  
 
+#### Programmatic Usage
+
+In rare cases, you might want to run `pelte` programmatically.
+
+```js
+const { pelte } = require('publish-svelte');
+
+const options = {
+  srcFile: __dirname + '/Simple.svelte',
+  keepBundle: true,
+  skipPublish: true
+}
+
+pelte(options)
+```
+
+Pelte also exports a `generate` function that will generate bundles in-memory, but not write them to a file. This can be used if you want fine-grained control of the output bundle.
+
+_Note: The `keepBundle` and `skipPublish` options are ignored by `generate`_
+
+```js
+const { generate } = require('publish-svelte');
+
+const options = {
+  srcFile: __dirname + '/Simple.svelte',
+}
+
+generate(options).then(bundles => {
+  const umd = bundles.find(bundle => bundle.options.format === 'umd')
+  console.log('this is the umd bundle', umd)
+})
+```
+
 #### Help?
 
 See other available arguments with:
