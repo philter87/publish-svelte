@@ -1,6 +1,6 @@
 {
   "name": "publish-svelte",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "A command-line tool for publishing svelte components to npm",
   "prepublishOnly": "tsc",
   "main": "dist/pelte.js",
