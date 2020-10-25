@@ -15,7 +15,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import sveltePreprocess from 'svelte-preprocess';
 // import typescript from '@rollup/plugin-typescript';
 
-export function pelte(cmdOptions: Partial<PelteOptions>) {
+export function parseOptions(cmdOptions: Partial<PelteOptions>) {
   const opts = mergeOptions(cmdOptions);
 
   const inputOptionsRollup = {
@@ -39,12 +39,34 @@ export function pelte(cmdOptions: Partial<PelteOptions>) {
     {format: 'es', file: join(opts.outputDir, INDEX_ES), sourcemap: false}
   ];
 
+  return {
+    opts,
+    inputOptionsRollup,
+    rollupWriteOpts
+  }
+}
+
+export async function generate(cmdOptions: Partial<PelteOptions>) {
+  const { inputOptionsRollup, rollupWriteOpts } = parseOptions(cmdOptions);
+
+  const bundle = await rollup(inputOptionsRollup)
+  return Promise.all(rollupWriteOpts.map(async writeOpts => ({
+    options: writeOpts,
+    bundle: await bundle.generate(writeOpts)
+  })))
+}
+
+export function pelte(cmdOptions: Partial<PelteOptions>) {
+  const { opts, inputOptionsRollup, rollupWriteOpts } = parseOptions(cmdOptions);
+
   createTsConfig(opts);
   createPackageFile(opts);
   createReadmeFiles(opts);
+
   if(opts.init) {
     return;
   }
+
   return rollup(inputOptionsRollup)
     .then(bundle => {
       opts.watchFiles = bundle.watchFiles;

@@ -3,7 +3,7 @@
   "version": "0.6.0",
   "description": "A command-line tool for publishing svelte components to npm",
   "prepublishOnly": "tsc",
-  "main": "dist/index.js",
+  "main": "dist/pelte.js",
   "scripts": {
     "test": "mocha -r ts-node/register test/**.ts",
     "tsc": "tsc"
@@ -29,19 +29,21 @@
   "author": "Philip Christiansen",
   "license": "ISC",
   "dependencies": {
-    "commander": "^4.0.1",
-    "prompts": "^2.3.0",
-    "rollup": "^2.3.4",
+    "@babel/core": "^7.12.3",
     "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-node-resolve": "^8.0.0",
+    "@rollup/plugin-typescript": "^4.0.0",
+    "@tsconfig/svelte": "^1.0.0",
+    "commander": "^4.0.1",
+    "postcss": "^8.1.4",
+    "prompts": "^2.3.0",
+    "rollup": "^2.3.4",
     "rollup-plugin-svelte": "^6.0.0",
     "svelte": "^3.12.1",
     "svelte-check": "^1.0.0",
     "svelte-preprocess": "^4.0.0",
-    "@rollup/plugin-typescript": "^4.0.0",
-    "typescript": "^3.9.3",
     "tslib": "^2.0.0",
-    "@tsconfig/svelte": "^1.0.0"
+    "typescript": "^3.9.3"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.7",

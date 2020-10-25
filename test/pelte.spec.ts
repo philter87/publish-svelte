@@ -1,5 +1,5 @@
 import assert from 'assert';
-import {pelte} from "../src/pelte";
+import {pelte, generate, parseOptions} from "../src/pelte";
 import { join, parse } from 'path';
 import {PelteOptions} from "../src/pelte-options";
 import {existsSync, unlinkSync} from "fs";
@@ -23,6 +23,19 @@ describe('pelte', () => {
   });
 });
 
+describe('generate', () => {
+  it('Simple, files should exist', () => {
+    var opts: PelteOptions = {srcFile: join(SVELTE_COMPONENT_DIR, TEST_COMPONENT + ".svelte"), skipPublish: true, keepBundle: true };
+    return generate(opts)
+      .then((results) => verifyGenerate(results, opts))
+  });
+  it('Two nested components should be copied to bundle. NestedComponent and NestedFolder/Another', () => {
+    let opts: PelteOptions = {srcFile: join(SVELTE_COMPONENT_DIR, PARENT_COMPONENT + ".svelte"), skipPublish: true, keepBundle: true };
+    return generate(opts)
+      .then((results) => verifyGenerate(results, opts))
+  });
+});
+
 function verifyAndCleanUp(opts: PelteOptions, otherFiles: string[] = []) {
   const parsed = parse(opts.srcFile);
   // outputDir needs to be reassigned manually
@@ -39,4 +52,12 @@ function verifyAndCleanUp(opts: PelteOptions, otherFiles: string[] = []) {
   opts.keepBundle = false;
   cleanUp(opts);
   assert(!existsSync(opts.outputDir))
+}
+
+function verifyGenerate(results, opts: PelteOptions) {
+  const { rollupWriteOpts } = parseOptions(opts);
+  results.forEach(result => {
+    assert(rollupWriteOpts.find(writeOpts => writeOpts.format == result.options.format), "Rollup write options should exist on `options` key")
+    assert(result.bundle, "Generated rollup bundle should exist on `bundle` key")
+  })
 }
