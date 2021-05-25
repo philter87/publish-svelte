@@ -13,7 +13,8 @@ import {createTsConfig} from "./creators/ts-config-creator";
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from '@rollup/plugin-node-resolve';
 import sveltePreprocess from 'svelte-preprocess';
-// import typescript from '@rollup/plugin-typescript';
+// import typescript from 'rollup-plugin-typescript2';
+// "rollup-plugin-typescript2": "^0.30.0",
 
 export function parseOptions(cmdOptions: Partial<PelteOptions>) {
   const opts = mergeOptions(cmdOptions);
@@ -22,7 +23,9 @@ export function parseOptions(cmdOptions: Partial<PelteOptions>) {
     input: opts.srcFile,
     plugins: [
         svelte({
-          customElement: opts.webComponentInfo.exists,
+          compilerOptions: {
+            customElement: opts.webComponentInfo.exists,
+          },
           preprocess: sveltePreprocess(),
         }),
       resolve({
@@ -30,7 +33,7 @@ export function parseOptions(cmdOptions: Partial<PelteOptions>) {
         dedupe: ['svelte']
       }),
       commonjs(),
-      // typescript({sourceMap: false}),
+//      typescript()
     ]
   };
 
